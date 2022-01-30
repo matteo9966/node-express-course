@@ -11,8 +11,8 @@ const authentication=(req,res,next)=>{
     if(!isValid){
         throw new CustomAPIError("token is not valid")
     }
-    const {name,email,role,id}=isValid;
-    req.user={name,email,role,id};
+    const {name,email,role,_id}=isValid;
+    req.user={name,email,role,_id};
 
     next();
 }

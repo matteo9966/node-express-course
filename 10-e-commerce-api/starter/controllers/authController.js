@@ -1,7 +1,7 @@
 const express = require('express')
 const User = require('../models/Users');
 const {StatusCodes} = require('http-status-codes');
-const {createJWT,attachCookiesToResponse}=require('../utils')
+const {createJWT,attachCookiesToResponse,filterKeys}=require('../utils')
 
 /**
  * @param {express.Request} req
@@ -16,11 +16,15 @@ async function register(req,res){
     throw new Error("email already exists!");
  }
  const response = await User.create({email,name,password});
- const usertoken = createJWT({payload:{name:response.name,email:response.email,role:response.role,id:response._id},secret:process.env.JWT_SECRET})
+
+ const objResponse = response.toObject();
+ filterKeys(objResponse,'password');
+ 
+ const usertoken = createJWT({payload:objResponse,secret:process.env.JWT_SECRET})
 
 
  attachCookiesToResponse(res,['usertoken',usertoken],{signed:false,httpOnly:true});
- res.status(StatusCodes.CREATED).send({user:response});
+ res.status(StatusCodes.CREATED).send({user:response,obj:objResponse});
   
     
 }
@@ -52,10 +56,11 @@ async function login(req,res){
       error.message="wrong password"
       throw error;
     }
-     
-    const {name,_id,role} = user;
+       
+    const objResponse = user.toObject();
+    filterKeys(objResponse,'password');  
 
-    const usertoken = createJWT({payload:{name,email,id:_id,role},secret:'jwtSecret'});
+    const usertoken = createJWT({payload:objResponse,secret:'jwtSecret'});
    
     attachCookiesToResponse(res,['usertoken',usertoken],{signed:false,httpOnly:true});
     res.status(StatusCodes.OK).send({user});

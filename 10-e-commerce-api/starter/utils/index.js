@@ -1,3 +1,5 @@
 const { createJWT, verifyJWT } = require("./jwtfunctions");
 const {attachCookiesToResponse} = require('./cookiefunctions');
-module.exports = { createJWT, verifyJWT,attachCookiesToResponse };
+const filterKeys = require('./filterKeys');
+const checkPermissions = require('./checkPermissions');
+module.exports = { createJWT, verifyJWT,attachCookiesToResponse,filterKeys,checkPermissions };
