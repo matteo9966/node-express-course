@@ -45,4 +45,4 @@ User.methods.comparePasswords = async function(insertedPassword){
     return isMatch
 }
 
-module.exports = mongoose.model("user", User);
+module.exports = mongoose.model("User", User);

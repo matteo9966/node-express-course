@@ -119,7 +119,7 @@ const uploadImage = async (req, res) => {
  
 
 
-  res.json({result});
+  res.status(200).json({result});
 };
 
 module.exports = {

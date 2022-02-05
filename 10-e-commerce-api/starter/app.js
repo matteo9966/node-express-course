@@ -17,6 +17,7 @@ const morgan = require('morgan')
 const authRoutes =require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 //cloudinary configuration
 
@@ -50,6 +51,7 @@ app.get('/',(req,res)=>{console.log(req.cookies);res.cookie('cookie1',"nome del 
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/users',userRoutes);
 app.use('/api/v1/products',productRoutes);
+app.use('/api/v1/reviews',reviewRoutes);
 
 
 
