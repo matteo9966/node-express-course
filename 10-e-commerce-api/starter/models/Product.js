@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Review = require('./Review')
 const Product = new mongoose.Schema(
   {
     name: {
@@ -38,10 +38,24 @@ const Product = new mongoose.Schema(
     averageRating: { type: Number },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "User",
+      ref: "user",
     },
   },
-  { timestamps: true }
+  { timestamps: true,toJSON:{virtuals:true},toObject:{virtuals:true} } //dice di considerare i virtuals nella conversione in JSON e nella conversione in js Object
 );
 
-module.exports = mongoose.model("product", Product);
+Product.virtual('review',{ //creo un virtual
+  ref:'review',
+  localField:'_id', //id di user nel review
+  foreignField:'product', // id si trova dentro review!
+})
+
+Product.pre('deleteOne',async function(next){
+ console.log("%%%%%%%%%%% qui ci arrivi %%%%%%%%")
+ const productID = this._id;
+ const deleted = await Review.deleteMany({product:productID}); // ? non cancella 
+ console.log(deleted);
+ next();
+})
+
+module.exports = mongoose.model("product", Product,"product"); 

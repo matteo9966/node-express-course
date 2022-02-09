@@ -32,7 +32,7 @@ const getAllProducts = async (req, res) => {
 //non passa per autenticazione
 const getSingleProduct = async (req, res) => {
   const productID = req.params.id;
-   const product = await Product.findById(productID);
+   const product = await Product.findById(productID).populate('review'); // ho popolato review, una proprietà virtuale
    res.status(200).json(product);
 };
 
@@ -61,7 +61,7 @@ const deleteProduct = async (req, res) => {
 
   checkOwner(userId,product.user);
 
-  const response = await Product.findByIdAndDelete(productId) //#FIXME: questo deve essere cambiato in remove dopo aver cancellato i reviews del prodotto!
+  const response = await Product.deleteOne({_id:productId}) //deleteOne triggera il deleteOne middleware pre  hook, così prima di cancellare il prodotto cancello tutte le review di quel prodotto
 
   
   res.status(200).json(response);

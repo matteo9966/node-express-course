@@ -18,12 +18,12 @@ const Review = new mongoose.Schema({
      maxlenght:200,
  },
 user:{
-  ref:'User',
+  ref:'user',
   type:mongoose.Types.ObjectId,
   required:true,
 },
 product:{
-  ref:'Product',
+  ref:'product',
   type:mongoose.Types.ObjectId,
   required:true,
 }
@@ -33,4 +33,4 @@ product:{
 //user can leave only one review per product: ? 
 Review.index({user:1,product:1},{unique:true})
 
-module.exports = mongoose.model('Review',Review);
+module.exports = mongoose.model('review',Review,'review');
