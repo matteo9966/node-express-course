@@ -35,7 +35,8 @@ const Product = new mongoose.Schema(
     featured: { type: Boolean, default: false },
     freeShipping: { type: Boolean, default: false },
     inventory: { type: Number, default: 1 },
-    averageRating: { type: Number },
+    averageRating: { type: Number,default:0 },
+    numberOfReviews:{type:Number,default:0},
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "user",
@@ -50,9 +51,8 @@ Product.virtual('review',{ //creo un virtual
   foreignField:'product', // id si trova dentro review!
 })
 
-Product.pre('deleteOne',async function(next){
- console.log("%%%%%%%%%%% qui ci arrivi %%%%%%%%")
- const productID = this._id;
+Product.pre('deleteOne',{ document: true, query: true },async function(next){
+ const productID = this._id; 
  const deleted = await Review.deleteMany({product:productID}); // ? non cancella 
  console.log(deleted);
  next();

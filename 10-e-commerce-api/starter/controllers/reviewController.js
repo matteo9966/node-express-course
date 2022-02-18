@@ -94,7 +94,7 @@ const deleteReview = async (req,res)=>{
     }
     
     checkPermissions(req.user,review.user);
-    const deleted = await Review.findByIdAndDelete(req.params.id);
+    const deleted = await Review.findByIdAndDelete(req.params.id); //che succede se chiamo questo?
     res.status(200).json(deleted)
 
 }

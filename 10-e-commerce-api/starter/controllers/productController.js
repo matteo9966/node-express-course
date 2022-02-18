@@ -60,8 +60,10 @@ const deleteProduct = async (req, res) => {
   if(!product) throw new Error("product not available")
 
   checkOwner(userId,product.user);
+   
+  const response = await product.deleteOne({_id:productId})
 
-  const response = await Product.deleteOne({_id:productId}) //deleteOne triggera il deleteOne middleware pre  hook, così prima di cancellare il prodotto cancello tutte le review di quel prodotto
+  // const response = await Product.deleteOne({_id:productId}) //deleteOne triggera il deleteOne middleware pre  hook, così prima di cancellare il prodotto cancello tutte le review di quel prodotto
 
   
   res.status(200).json(response);
@@ -92,7 +94,7 @@ const uploadImage = async (req, res) => {
    
    
 
-   //#FIXME: IL FILE NON DEVE ESSERE CARICATO SU CLOUDINARY MA IN UNA CARTELLA DENTRO PUBLIC!
+ 
    const folderForImages = path.join(__dirname,'../public','uploads');
    
    if (!fs.existsSync(folderForImages)){
