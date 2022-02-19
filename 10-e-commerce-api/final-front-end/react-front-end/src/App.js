@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const rootUrl = 'http://localhost:5000';
+// const rootUrl = 'http://localhost:5000';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -11,8 +11,8 @@ function App() {
     const user = { email, password };
 
     try {
-      const url = `${rootUrl}/api/v1/auth/login`;
-      // const url = `/api/v1/auth/login`;
+      // const url = `${rootUrl}/api/v1/auth/login`;
+      const url = `/api/v1/auth/login`;
       await fetch(url, {
         method: 'POST',
         headers: {
@@ -28,13 +28,13 @@ function App() {
   };
 
   const fetchTesting = async () => {
-    const url = `${rootUrl}/api/v1`;
-    // const url = `/api/v1`;
+    // const url = `${rootUrl}/api/v1`;
+    const url = `/api/v1`;
     await fetch(url);
   };
   const fetchLogout = async () => {
-    const url = `${rootUrl}/api/v1/auth/logout`;
-    // const url = `/api/v1/auth/logout`;
+    // const url = `${rootUrl}/api/v1/auth/logout`;
+    const url = `/api/v1/auth/logout`;
     await fetch(url);
   };
 
