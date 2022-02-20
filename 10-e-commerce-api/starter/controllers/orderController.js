@@ -2,7 +2,7 @@ const CustomAPIError = require("../errors");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const { StatusCodes } = require("http-status-codes");
-
+const {checkPermissions} = require('../utils');
 /* 
   name
   image
@@ -70,22 +70,54 @@ const createOrder = async (req, res) => {
     user: req.user._id,
   });
 
-  console.log("ordine ricevuto con:\n", orderItems);
-  console.log("ordine ricevuto con subtotale:\n", subtotal);
-
   res.status(StatusCodes.CREATED).json({ order });
 };
 
 const getAllOrders = async (req, res) => {
-  res.send("getAllOrders");
+  //questo è accessibile solo da admin
+  const orders = await Order.find({});
+  res.status(StatusCodes.OK).json({orders});
 };
+
 const getSingleOrders = async (req, res) => {
-  res.send("getSingleOrders");
+  const orderId= req.params.id; //? 
+  const order = await Order.findById(orderId);
+  
+  if(!order){
+    throw new Error("no order with id"+orderId);
+  }
+
+  checkPermissions(req.user,order.user.toString()) 
+
+
+  res.status(StatusCodes.OK).json({order});
+
 };
 const getCurrentUserOrders = async (req, res) => {
-  res.send("getCurrentUserOrders");
+  const userId = req.user._id;
+  const orders = await Order.find({user:userId});
+
+  res.status(StatusCodes.OK).json({orders});
 };
+
+
 const updateOrder = async (req, res) => {
+   const orderId = req.params.id;
+   const { paymentIntentId} = req.body;
+  
+   //controllo se l'ordine esiste
+   const order = await Order.findById(orderId);
+   if(!order){
+     throw new CustomAPIError.BadRequestError("no order with id: "+id);
+
+   }
+   console.log(req.user._id,order.user);
+   checkPermissions(req.user,order.user.toString());
+   order.paymentIntentId = paymentIntentId;
+   order.status="payed";
+   await order.save();
+
+ 
   res.send("updateOrder");
 };
 

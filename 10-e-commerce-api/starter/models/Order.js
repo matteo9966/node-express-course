@@ -39,13 +39,12 @@ const Order = mongoose.Schema(
       type: String,
       required: true,
     },
-    // paymentIntentId: {
-    //   type: String,
-    //   required: true,
-    // },
+    paymentIntentId: {
+      type: String,
+    },
     status: {
       type: String,
-      enum: ["pending", "failded", "delivered", "cancelled"],
+      enum: ["pending", "failed", "delivered", "cancelled","payed"],
       default: "pending",
     },
   },

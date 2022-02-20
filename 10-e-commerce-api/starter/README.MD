@@ -326,37 +326,37 @@
 
 #### Get All Orders and Get Single Order
 
-- [] getAllOrders - admin only
-- [] getSingleOrder - chechPermissions
+- [x] getAllOrders - admin only
+- [x] getSingleOrder - chechPermissions
 
 #### Get Current User Orders
 
-- [] find orders where user is equal to req.user.userId
+- [x] find orders where user is equal to req.user.userId
 
 #### Update Order
 
-- [] get order id
-- [] get paymentIntentId (req.body)
-- [] get order
-- [] if does not exist - 404
-- [] check permissions
-- [] set paymentIntentId and status as 'paid'
-- [] order.save()
+- [x] get order id
+- [x] get paymentIntentId (req.body)
+- [x] get order
+- [x] if does not exist - 404
+- [x] check permissions
+- [x] set paymentIntentId and status as 'paid'
+- [x] order.save()
 
 #### Create Docs
 
-- [] [Docgen Library] (https://github.com/thedevsaddam/docgen)
-- [] Export Postman Collection
-- [] docgen build -i fileName.json -o index.html
-- [] create index.html in public
+- [x] [Docgen Library] (https://github.com/thedevsaddam/docgen)
+- [x] Export Postman Collection
+- [x] docgen build -i fileName.json -o index.html
+- [x] create index.html in public
 
 #### Security Packages
 
-- [] express-rate-limiter
-- [] helmet
-- [] xss-clean
-- [] express-mongo-sanitize
-- [] cors (cookies!!!!)
+- [x] express-rate-limiter
+- [x] helmet
+- [x] xss-clean
+- [x] express-mongo-sanitize
+- [x] cors (cookies!!!!)
 
 #### Deploy on Heroku
 
